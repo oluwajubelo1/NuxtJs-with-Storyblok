@@ -10,7 +10,8 @@ module.exports = {
       { hid: 'description', name: 'description', content: 'A storyblokJS sprinkled on a nuxtJS project' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {rel:'stylesheet', href:'https://fonts.googleapis.com/css?family=Lato:400,700'}
     ]
   },
   /*
