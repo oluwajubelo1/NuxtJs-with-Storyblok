@@ -18,13 +18,12 @@ export default {
 
   asyncData(context){
     //check if we are in the editor mode
-    let version=context.query._storyblok || context.isDev ? 'draft' : 'Published'
+    let version=context.query._storyblok || context.isDev ? 'draft' : 'published'
    
     return context.app.$storyapi.get("cdn/stories",{
       version: version,
       starts_with: "blog/"  
-    }).then((response)=>{
-      console.log(response.data.stories);
+    }).then((response)=>{ 
        return {
          posts:response.data.stories.map(bp=>{
         return {

@@ -1,5 +1,5 @@
 <template>
-    <div id="post">
+    <div id="post" v-editable="blok">
         <div class="post-thumbnail" :style="{backgroundImage: 'url('+image+') '}"></div>
             <section class="post-content">
                 <h1>{{title}}</h1>
@@ -14,18 +14,25 @@
 export default {
     asyncData(context){
         //check if we are in editor mode
-        let version=context.query._storyblok || context.isDev ? 'draft':'Published'
+        // let version=context.query._storyblok || context.isDev ? 'draft':'published'
         return context.app.$storyapi.get('cdn/stories/blog/'+context.params.postId,{
-            version:version
+            version:process.env.NODE_ENV == "production" ? "published": "draft"
         }).then((response)=>{
-            // console.log(response.data.story.content);
+            console.log(response.data);
          return  {
+               blok: response.data.story.content,
                image: response.data.story.content.thumbnail,
                title: response.data.story.content.title,
                content: response.data.story.content.content
            }
         })
-    }
+    },
+    mounted() {
+        this.$storyblok.init();
+        this.$storyblok.on('change',()=>{
+            location.reload(true);
+        })
+    },
 }
 </script>
 <style>
