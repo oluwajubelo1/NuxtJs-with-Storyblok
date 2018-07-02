@@ -15,22 +15,40 @@ export default {
   components:{
     PostPreview
   },
-  data(){
-    return{
-      posts:[
-        {title:'A new Beginning',
-        previewText:'This will be awesone, don\'t miss out',
-        thumbnailURL:'https://pass.ng/images/app-interface.png',
-        id:'first-image'
-        },
-        {title:'A second Beginning',
-        previewText:'This will be awesone, don\'t miss out',
-        thumbnailURL:'https://pass.ng/images/app-interface.png',
-        id:'second-image'
-        },
-      ]
-    }
+  asyncData(context){
+    return context.app.$storyapi.get("cdn/stories",{
+      version:'draft',
+      starts_width: 'blog/'
+    }).then((response)=>{
+      // console.log(response);
+      return {
+        posts: response.data.stories.map(bp=>{
+        return {
+          id :bp.slug,
+          title: bp.content.title,
+          previewText: bp.content.summary,
+          thumbnailURL: bp.content.thumbnail 
+        }
+      })
+      };
+    })
   }
+  // data(){
+  //   return{
+  //     posts:[
+  //       {title:'A new Beginning',
+  //       previewText:'This will be awesone, don\'t miss out',
+  //       thumbnailURL:'https://pass.ng/images/app-interface.png',
+  //       id:'first-image'
+  //       },
+  //       {title:'A second Beginning',
+  //       previewText:'This will be awesone, don\'t miss out',
+  //       thumbnailURL:'https://pass.ng/images/app-interface.png',
+  //       id:'second-image'
+  //       },
+  //     ]
+  //   }
+  // }
 }
 </script>
 

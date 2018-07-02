@@ -22,8 +22,10 @@ export default {
   }
   body{
     font-family: "lato", sans-serif;
+    margin: 0;
   }
   .main-content{
     margin-top: 4.5rem;
   }
+  
 </style>
