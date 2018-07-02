@@ -13,9 +13,12 @@
 <script>
 export default {
     asyncData(context){
+        //check if we are in editor mode
+        let version=context.query._storyblok || context.isDev ? 'draft':'Published'
         return context.app.$storyapi.get('cdn/stories/blog/'+context.params.postId,{
-            version:'draft'
+            version:version
         }).then((response)=>{
+            // console.log(response.data.story.content);
          return  {
                image: response.data.story.content.thumbnail,
                title: response.data.story.content.title,

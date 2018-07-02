@@ -15,14 +15,18 @@ export default {
   components:{
     PostPreview
   },
+
   asyncData(context){
+    //check if we are in the editor mode
+    let version=context.query._storyblok || context.isDev ? 'draft' : 'Published'
+   
     return context.app.$storyapi.get("cdn/stories",{
-      version:'draft',
-      starts_width: 'blog/'
+      version: version,
+      starts_with: "blog/"  
     }).then((response)=>{
-      // console.log(response);
-      return {
-        posts: response.data.stories.map(bp=>{
+      console.log(response.data.stories);
+       return {
+         posts:response.data.stories.map(bp=>{
         return {
           id :bp.slug,
           title: bp.content.title,
@@ -30,7 +34,12 @@ export default {
           thumbnailURL: bp.content.thumbnail 
         }
       })
-      };
+       };
+    }).catch((error)=>{
+      context.error({
+        statusCode: error.response.status,
+        message: error.response.data
+      })
     })
   }
   // data(){

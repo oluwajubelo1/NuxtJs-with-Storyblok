@@ -8,9 +8,12 @@
 <script>
 export default {
     asyncData(context){
+        //check if we are in the editor mode
+        let version= context.query._storyblok || context.isDev ? 'draft':'Published'
         return context.app.$storyapi.get('cdn/stories/about',{
-            version:'draft'
+            version:version
         }).then((response)=>{
+            
             return {
             title: response.data.story.content.title,
             content: response.data.story.content.content
