@@ -26,15 +26,15 @@ module.exports = {
     //Doc: https://github.com/nuxt-community/axios-module#usage
     ["storyblok-nuxt",
     {accessToken: process.env.NODE_ENV == "production" 
-    ? "8BN0EA8AbXf4qzcAbmNNBAtt"
-     : "qpEQ6cUIbUCxTSJk7Kv6BQtt",
+    ? "YOUR_PUBLIC_KEY"
+     : "YOUR_PREVIEW_KEY",
      cacheProvider:"memory"}
   ]
   ],
 
   generate:{
     routes:function(){
-        return axios.get('https://api.storyblok.com/v1/cdn/stories?version=published&token=8BN0EA8AbXf4qzcAbmNNBAtt&starts_with=blog&cv='+
+        return axios.get('https://api.storyblok.com/v1/cdn/stories?version=published&token=YOUR_PUBLIC_KEY&starts_with=blog&cv='+
          Math.floor(Date.now()/1e3)).then((response)=>{
            const blogPosts=response.data.stories.map(bp=>bp.full_slug)
           return [
